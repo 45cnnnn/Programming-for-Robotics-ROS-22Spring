@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+    <arg name="simulation" 			    default="true"/>
+    <arg name="robot_namespace" 		default=""/>
+    <arg name="robot_description"  	default="robot_description"/>
+    <arg name="description_file"    default="$(find smb_description)/urdf/smb_standalone.urdf.xacro"/>
+
+    <node name="ekf_localization" pkg="robot_localization" type="ekf_localization_node" output="screen" >
+        <rosparam command="load" file="$(find smb_control)/config/localization.yaml" />
+    </node>
+
+    <node name="play" pkg="rosbag" type="play" output="screen" args="--rate=0.5 --clock /home/yu/git/smb_navigation.bag" >
+        <param name="use_sim_time" value="true" />
+    </node>
+
+    <include file="$(find smb_description)/launch/load.launch">
+        <arg name="simulation"       value="$(arg simulation)"/>
+        <arg name="description_name" value="$(arg robot_description)"/>
+        <arg name="description_file" value="$(arg description_file)"/>
+        <arg name="wheel_joint_type" value="continuous"/>
+        <arg name="robot_namespace"  value="$(arg robot_namespace)"/>
+    </include>
+
+    <node name="smb_robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen">
+        <param name="publish_frequency" value="50"/>
+        <param name="use_tf_static"     value="true"/>
+        <remap from="robot_description" to="$(arg robot_description)"/>
+    </node>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find smb_highlevel_controller)/rviz/smb_ex2.rviz"/>
+
+</launch>
