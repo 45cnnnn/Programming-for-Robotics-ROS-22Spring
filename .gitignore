@@ -32,7 +32,8 @@
 *.app
 
 # build
-.catkin_tools
+.catkin_tools/*
+logs/*
 build/*
 devel/*
 .vscode/*
