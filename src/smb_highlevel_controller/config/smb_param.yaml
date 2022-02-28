@@ -1,0 +1,4 @@
+scan_subscriber_topic: /scan
+point_subscriber_topic: /rslidar_points
+p_controller: 10.0
+queue_size: 10
