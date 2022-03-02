@@ -1,1 +1,150 @@
-# ROS-22Spring
+# Programming-for-Robotics-ROS-22Spring
+
++ Lecturers: Edo Jelavić, Mayank Mittal, Prof. Marco Hutter
+
++  [**[Webpage](https://rsl.ethz.ch/education-students/lectures/ros.html)**]
+
+### Abstract
+
+This course gives an introduction to the Robot Operating System (ROS) including many of the available tools that are commonly used in robotics. With the help of different examples, the course should provide a good starting point for students to work with robots. They learn how to create software including simulation, to interface sensors and actuators, and to integrate control algorithms.
+
+### Objective:
+
++ ROS architecture: Master, nodes, topics, messages, services, parameters and actions
++ Console commands: Navigating and analyzing the ROS system and the catkin workspace
++ Creating ROS packages: Structure, launch-​files, and best practices
++ ROS C++ client library (roscpp): Creating your own ROS C++ programs
++ Simulating with ROS: Gazebo simulator, robot models (URDF) and simulation environments (SDF)
++ Working with visualizations (RViz) and user interface tools (rqt)
++ Inside ROS: TF transformation system, time, bags
++ Introduction to ROS2
+
+## Lecture 1
++ Topic
+	ROS architecture & philosophy; ROS master, nodes, and topics; Console commands; Catkin workspace and build system; Launch-files; Gazebo simulator; Programming Tools
+
+#### ROS Nodes
+
+```shell
+rosrun package_name node_name
+rosnode list
+rosnode info node_name
+```
+#### ROS Topics
+
+```shell
+rostopic list
+rostopic echo /topic
+rostopic info /topic
+```
+#### ROS Messages
++ Data structure defining the type of a topic
++ Defined in **.msg*  files
+```
+rostopic type /topic
+rostopic pub /topic type data
+rostopic pub /chatter std_msgs/String "data: 'ETH Zurich ROS Course'"
+```
+[example: PoseStamped.msg]
+> **[ROS Wiki Message files](http://wiki.ros.org/Messages)**
+
+#### ROS Nodelets
+> **[ROS Wiki Nodelet](http://wiki.ros.org/nodelet) **
+
+#### ROS Workspace Environment
+```
+source /opt/ros/noetic/setup.bash
+```
+##### catkin build System
+```
+cd ~/catkin_ws
+catkin build
+source devel/setup.bash
+```
+Clean the entire build and devel space with
+```
+catkin clean
+```
+The catkin workspace setup can be checked with
+```
+catkin config
+```
+For example, to set the CMake build type to Release (or Debug etc.), use:
+```
+catkin build --cmake-args -DCMAKE_BUILD_TYPE=Release
+```
+Symlink a new package to your catkin workspace
+```
+ln -s ~/git/ros_best_practices/ ~/catkin_ws/src/
+```
+#### ROS Launch
++ lauch is a tool for launching multiple nodes (as well as setting parameters)
++ Are written in XML as **.launch* files
++ If not yet running, launch automatically starts a roscore
+```
+roslaunch file_name.launch
+roslaunch package_name file_name.launch
+```
+> **[ROS Wiki Launch files](http://wiki.ros.org/roslaunch/XML) **
+> **[Roslaunch tips for large projects](http://wiki.ros.org/roslaunch/Tutorials/Roslaunch%20tips%20for%20larger%20projects) **
+
+```XML
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Launch ROS Package Template Node -->
+	<node pkg="ros_package_template" type="ros_package_template" name="ros_package_template" output="screen">
+		<rosparam command="load" file="$(dirname)/../config/default.yaml" />
+	</node>
+
+</launch>
+```
+
+```XML
+<!-- Create a re-usable launch files with <arg> tag, which works like a parameter -->
+<arg name="use_sim_time" default="true"/>
+
+<!-- Use arguments in launch file with $(arg use_sim_time)-->
+<group if="$(arg use_sim_time)">
+	<param name="/use_sim_time" value="true" />
+</group>
+
+<!-- Include other launch files -->
+<!-- Find the system path to other packages with $(find package_name)-->
+<include file="$(find gazebo_ros)/launch/empty_world.launch">
+	<arg name="world_name" value="$(find gazebo_plugins)/test/test_worlds/$(arg world).world"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="physics" value="$(arg physics)"/>
+</include>
+```
+#### Gazebo Simulator
+> **[Gazebo tutorials](http://gazebosim.org/tutorials)**
+
+
+
+## Lecture 2
+
++ Topic
+	ROS package structure; ROS C++ client library (roscpp); ROS subscribers and publishers; ROS parameter server; RViz visualization
+
+
+
+## Lecture 3
+
++ Topic
+	TF Transformation System; rqt User Interface; Robot models (URDF); Simulation descriptions (SDF)
+
+
+
+## Lecture 4
+
++ Topic
+	ROS services; ROS actions (actionlib); ROS time; ROS bags; Debugging strategies; Introduction to ROS2
+
+
+
+## Lecture 5
+
++ Topic
+	Case study: Using ROS in complex real-​world applications
+
