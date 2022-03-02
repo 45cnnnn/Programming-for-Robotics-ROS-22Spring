@@ -113,8 +113,8 @@ Visualization Manager:
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
-        Max Value: 15.51904010772705
-        Min Value: -0.5097396969795227
+        Max Value: 14.862113952636719
+        Min Value: -0.40632277727127075
         Value: true
       Axis: Z
       Channel Name: intensity
@@ -235,6 +235,8 @@ Visualization Manager:
           Value: true
         rslidar_base_link:
           Value: true
+        smb_top_view:
+          Value: true
         top:
           Value: true
       Marker Alpha: 1
@@ -263,6 +265,8 @@ Visualization Manager:
             rslidar_base_link:
               rslidar:
                 {}
+            smb_top_view:
+              {}
             top:
               {}
       Update Interval: 0
@@ -303,7 +307,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 11.501497268676758
+      Distance: 6.7325639724731445
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -311,17 +315,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.7853981852531433
       Focal Point:
-        X: -8.791879653930664
-        Y: -0.5624813437461853
-        Z: 2.9873135089874268
+        X: -6.615782737731934
+        Y: 1.6268563270568848
+        Z: 1.991711139678955
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.380398154258728
+      Pitch: 0.33039820194244385
       Target Frame: <Fixed Frame>
-      Yaw: 2.397209882736206
+      Yaw: 2.07220721244812
     Saved: ~
 Window Geometry:
   Displays:
@@ -339,5 +343,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1386
-  X: 621
-  Y: 166
+  X: 385
+  Y: 233

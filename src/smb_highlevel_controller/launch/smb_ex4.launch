@@ -6,14 +6,6 @@
     <arg name="robot_description"  	default="robot_description"/>
     <arg name="description_file"    default="$(find smb_description)/urdf/smb_standalone.urdf.xacro"/>
 
-    <node name="ekf_localization" pkg="robot_localization" type="ekf_localization_node" output="screen" >
-        <rosparam command="load" file="$(find smb_control)/config/localization.yaml" />
-    </node>
-
-    <node name="play" pkg="rosbag" type="play" output="screen" args="--rate=0.5 --clock /home/yu/git/smb_navigation.bag" >
-        <param name="use_sim_time" value="true" />
-    </node>
-
     <include file="$(find smb_description)/launch/load.launch">
         <arg name="simulation"       value="$(arg simulation)"/>
         <arg name="description_name" value="$(arg robot_description)"/>
@@ -28,6 +20,16 @@
         <remap from="robot_description" to="$(arg robot_description)"/>
     </node>
 
+    <node name="ekf_localization" pkg="robot_localization" type="ekf_localization_node" output="screen" >
+        <rosparam command="load" file="$(find smb_control)/config/localization.yaml" />
+    </node>
+
+    <param name="use_sim_time" value="true" />
+    <node name="play" pkg="rosbag" type="play" output="screen" args="--rate=0.5 --clock /home/yu/git/smb_navigation.bag" />
+
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find smb_highlevel_controller)/rviz/smb_ex2.rviz"/>
 
+    <node name="smb_top_view" pkg="tf" type="static_transform_publisher" args="0 0 2 0 0 0 base_link smb_top_view  100" />
+
+    <node name="rqt" pkg="rqt_multiplot" type="rqt_multiplot" args="--multiplot-run-all"/>
 </launch>
