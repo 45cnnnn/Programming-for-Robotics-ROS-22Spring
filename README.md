@@ -127,6 +127,89 @@ roslaunch package_name file_name.launch
 + Topic
 	ROS package structure; ROS C++ client library (roscpp); ROS subscribers and publishers; ROS parameter server; RViz visualization
 
+#### ROS Packages
+```
+.
+├── CMakeLists.txt
+├── config
+│   └── default.yaml                                   //(paramter files)
+├── include
+│   └── ros_package_template                           //(package name)
+│       ├── Algorithm.hpp
+│       └── RosPackageTemplate.hpp
+├── launch
+│   ├── ros_package_template.launch
+│   └── ros_package_template_overlying_params.launch
+├── LICENSE
+├── package.xml
+├── README.md
+├── src
+│   ├── Algorithm.cpp
+│   ├── RosPackageTemplate.cpp
+│   └── ros_package_template_node.cpp
+└── test
+    ├── AlgorithmTest.cpp
+    └── test_ros_package_template.cpp
+```
++ package.xml
+	+ Package name
+	+ Version Number
+	+ Authors
+	+ **Dependencies on other packages**
+	+ ...
++ CmakeLists.txt
+	+ see example 
++ pacakeg_name_msgs folder
+
+
+#### ROS C++ Client Library (roscpp)
++ Initialization and spinning
+	+ [ros::spin() and ros::spinOnce()](:https://answers.ros.org/question/11887/significance-of-rosspinonce/)
+	
++ Node Handle
+	+ Default(public) node handle
+	```
+	nh_ = ros::NodeHandle();                        /namespace/topic
+	```
+	+ Private node handle
+	```
+	nh_private_ = ros::NodeHandle("~");             /namespace/node/topic
+	```
+	+ Namespace node handle
+	```
+	nh_eth_ = ros::NodeHandle("eth");               /namespace/eth/topic
+	```
+	+ Global node handle (not recommanded)
+	
++ Logging
+	+ [rosconsle](https://wiki.ros.org/rosconsole)
+	+ [Logging](https://wiki.ros.org/roscpp/Overview/Logging) 
+	
++ [Subscriber and Publisher](https://wiki.ros.org/roscpp/Overview/Publishers%20and%20Subscribers)
+
++ Object Oriented Programming
+
++ Paramters
+    ```c++
+    ros::NodeHandle nodeHandle("~");
+    std::string topic;
+    if (!nodeHandle.getParam("topic", topic)) {
+        ROS_ERROR("Could not find topic parameter!");
+    }
+    ROS_INFO_STREAM("Read topic: " 
+    ```
+#### ROS Paramter Server 
++ [Parameters](https://wiki.ros.org/rosparam)
++ YAML files
++ launch API
++ Command line tools
+	```
+	rosparam list
+	rosparam get parameter_nam
+	rosparam set parameter_name value
+	```
+#### [Rviz](https://wiki.ros.org/rviz)
+
 
 
 ## Lecture 3
