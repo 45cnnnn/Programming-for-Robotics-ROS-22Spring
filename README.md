@@ -20,6 +20,7 @@ This course gives an introduction to the Robot Operating System (ROS) including 
 + Introduction to ROS2
 
 ## Lecture 1
+
 + Topic
 	ROS architecture & philosophy; ROS master, nodes, and topics; Console commands; Catkin workspace and build system; Launch-files; Gazebo simulator; Programming Tools
 
@@ -37,7 +38,9 @@ rostopic list
 rostopic echo /topic
 rostopic info /topic
 ```
+
 #### ROS Messages
+
 + Data structure defining the type of a topic
 + Defined in **.msg*  files
 ```
@@ -49,13 +52,17 @@ rostopic pub /chatter std_msgs/String "data: 'ETH Zurich ROS Course'"
 > **[ROS Wiki Message files](http://wiki.ros.org/Messages)**
 
 #### ROS Nodelets
+
 > **[ROS Wiki Nodelet](http://wiki.ros.org/nodelet) **
 
 #### ROS Workspace Environment
+
 ```
 source /opt/ros/noetic/setup.bash
 ```
+
 ##### catkin build System
+
 ```
 cd ~/catkin_ws
 catkin build
@@ -77,7 +84,9 @@ Symlink a new package to your catkin workspace
 ```
 ln -s ~/git/ros_best_practices/ ~/catkin_ws/src/
 ```
+
 #### ROS Launch
+
 + lauch is a tool for launching multiple nodes (as well as setting parameters)
 + Are written in XML as **.launch* files
 + If not yet running, launch automatically starts a roscore
@@ -117,8 +126,10 @@ roslaunch package_name file_name.launch
     <arg name="physics" value="$(arg physics)"/>
 </include>
 ```
+
 #### Gazebo Simulator
-> **[Gazebo tutorials](http://gazebosim.org/tutorials)**
+
+> > **[Gazebo tutorials](http://gazebosim.org/tutorials)**
 
 
 
@@ -128,6 +139,7 @@ roslaunch package_name file_name.launch
 	ROS package structure; ROS C++ client library (roscpp); ROS subscribers and publishers; ROS parameter server; RViz visualization
 
 #### ROS Packages
+
 ```
 .
 ├── CMakeLists.txt
@@ -163,6 +175,7 @@ roslaunch package_name file_name.launch
 
 
 #### ROS C++ Client Library (roscpp)
+
 + Initialization and spinning
 	+ [ros::spin() and ros::spinOnce()](:https://answers.ros.org/question/11887/significance-of-rosspinonce/)
 	
@@ -208,7 +221,14 @@ roslaunch package_name file_name.launch
 	rosparam get parameter_nam
 	rosparam set parameter_name value
 	```
+
 #### [Rviz](https://wiki.ros.org/rviz)
+
+#### Exercise 2
+
++ [pointcloud_to_laserscan](http://wiki.ros.org/pointcloud_to_laserscan)
++ [Introduction to Working With Laser Scanner Data](http://wiki.ros.org/laser_pipeline/Tutorials/IntroductionToWorkingWithLaserScannerData)
++ [LaserScan Msg](http://docs.ros.org/en/noetic/api/sensor_msgs/html/msg/LaserScan.html)
 
 
 
@@ -217,6 +237,26 @@ roslaunch package_name file_name.launch
 + Topic
 	TF Transformation System; rqt User Interface; Robot models (URDF); Simulation descriptions (SDF)
 
+#### [TF Transformation System](http://wiki.ros.org/tf2)
++ View Frames
++ C++ API
+	+ [Writing a tf2 listener](http://wiki.ros.org/tf2/Tutorials/Writing%20a%20tf2%20listener%20(C++))
+	+ [Using stamped datatypes with tf2::MessageFilter](http://wiki.ros.org/tf2/Tutorials/Using%20stamped%20datatypes%20with%20tf2%3A%3AMessageFilter)
+	
+#### rqt
+
++ User interface
++ rqt_image_view
++ rqt_multiplot
++ rqt_graph
++ rqt_console
++ rqt_logger_level
+
+#### Robots Models
+
++ Unified Robot Description Format (URDF)
++ Simulation Decription Format (SDF)
+
 
 
 ## Lecture 4
@@ -224,10 +264,35 @@ roslaunch package_name file_name.launch
 + Topic
 	ROS services; ROS actions (actionlib); ROS time; ROS bags; Debugging strategies; Introduction to ROS2
 
+#### [ROS services](https://wiki.ros.org/Services)
+
+```
+rosservice list
+rosservice type /service_name
+rosservice call /service_name args
+
+rossrv show ros_tutorials/TwoInts
+```
++ .srv files
++ [C++ API](https://wiki.ros.org/roscpp/Overview/Services)
+
+#### ROS actions (actionlib)
+
+#### ROS time
+
+#### ROS bags
+
+#### Debug Strategies
+
+#### Intro to ROS 2
+
+#### Exercise 4
+
++ [ekf_localization_node](http://docs.ros.org/en/melodic/api/robot_localization/html/state_estimation_nodes.html)
 
 
 ## Lecture 5
 
 + Topic
-	Case study: Using ROS in complex real-​world applications
+	Case study: Using ROS in complex real world applications
 

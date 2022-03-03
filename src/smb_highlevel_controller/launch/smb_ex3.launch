@@ -20,5 +20,6 @@
 
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find smb_highlevel_controller)/rviz/smb_ex2.rviz"/>
 
+    <node name="rqt" pkg="rqt_multiplot" type="rqt_multiplot" args="--multiplot-run-all"/>
 
 </launch>
