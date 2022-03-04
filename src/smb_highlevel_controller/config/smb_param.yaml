@@ -1,4 +1,6 @@
 scan_subscriber_topic: /scan
 point_subscriber_topic: /rslidar_points
+service_name: /start_control
+service_name_obs: /obstacle_stop
 p_controller: 10.0
 queue_size: 10

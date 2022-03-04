@@ -37,9 +37,16 @@ add_executable(${PROJECT_NAME}
   src/smb_highlevel_controller_node.cpp
   src/SmbHighlevelController.cpp
 )
+add_executable(${PROJECT_NAME}_
+  src/smb_obstacle_detection_node.cpp
+  src/SmbObstacleDetection.cpp
+)
 
 # Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+)
+target_link_libraries(${PROJECT_NAME}_
   ${catkin_LIBRARIES}
 )
 
@@ -49,6 +56,9 @@ target_link_libraries(${PROJECT_NAME}
 
 # Mark executables for installation
 install(TARGETS ${PROJECT_NAME}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+install(TARGETS ${PROJECT_NAME}_
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

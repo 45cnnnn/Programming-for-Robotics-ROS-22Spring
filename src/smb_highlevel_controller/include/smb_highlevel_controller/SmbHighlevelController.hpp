@@ -37,6 +37,7 @@ private:
     float pillarOrientation(const sensor_msgs::LaserScan::ConstPtr &msg);
 	float pillarDistance(const sensor_msgs::LaserScan::ConstPtr &msg);
 	bool start_control(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
+	bool obs_control(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
     ros::NodeHandle nodeHandle_;
     // ros::Subscriber scan_subscriber_;
 	// ros::Subscriber point_subscriber_;
@@ -47,8 +48,10 @@ private:
     std::string scan_subscriber_topic_;
 	std::string point_subscriber_topic_;
 	std::string service_name_;
+	std::string service_name_obs_;
 
 	ros::ServiceServer service_;
+	ros::ServiceServer obs_service_;
 	// tf2_ros::Buffer tfBuffer;
     // tf2_ros::TransformListener tfListener;
 
@@ -59,6 +62,7 @@ private:
 	visualization_msgs::Marker marker_;
 	
 	bool start = 1;
+	bool obs_signal = 1;
 };
 
 } /* namespace */

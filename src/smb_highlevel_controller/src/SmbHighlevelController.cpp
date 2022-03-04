@@ -15,6 +15,9 @@ SmbHighlevelController::SmbHighlevelController(ros::NodeHandle& nodeHandle) :
     pillar_subscriber_ = nodeHandle_.subscribe(scan_subscriber_topic_, queue_size_, &SmbHighlevelController::pillarCallback, this);
     pillar_publisher_ = nodeHandle_.advertise<geometry_msgs::Twist>("/cmd_vel", queue_size_);
     marker_publisher_ = nodeHandle_.advertise<visualization_msgs::Marker>("visualization_marker", 0);
+    // service_ = nodeHandle_.advertiseService("/start_control", &SmbHighlevelController::start_control, this);
+    service_ = nodeHandle_.advertiseService(service_name_, &SmbHighlevelController::start_control, this);
+    obs_service_ = nodeHandle_.advertiseService(service_name_obs_, &SmbHighlevelController::obs_control, this);
 }
 
 bool SmbHighlevelController::readParameters()
@@ -23,6 +26,8 @@ bool SmbHighlevelController::readParameters()
     if(!(nodeHandle_.getParam("/smb_highlevel_controller/point_subscriber_topic", point_subscriber_topic_ ))) return false;
     if(!(nodeHandle_.getParam("/smb_highlevel_controller/queue_size", queue_size_ ))) return false;
     if(!(nodeHandle_.getParam("/smb_highlevel_controller/p_controller", p_controller_ ))) return false;
+    if(!(nodeHandle_.getParam("/smb_highlevel_controller/service_name", service_name_ ))) return false;
+    if(!(nodeHandle_.getParam("/smb_highlevel_controller/service_name_obs", service_name_obs_ ))) return false;
     return true;
 }
 
@@ -93,9 +98,15 @@ void SmbHighlevelController::pillarCallback(const sensor_msgs::LaserScan::ConstP
     ROS_INFO_STREAM("Distance from pillar is " << distance << "m");
     ROS_INFO_STREAM("Orientation of pillar is " << orientation << "degrees");
     
-    cmd_vel_.linear.x = 1;
-    cmd_vel_.angular.z = p_controller_*orientation;
-    
+    if(start && obs_signal){
+        cmd_vel_.linear.x = 1;
+        cmd_vel_.angular.z = p_controller_*orientation;
+    }
+    else{
+    cmd_vel_.linear.x = 0;
+    cmd_vel_.angular.z = 0;
+    }
+      
     
     pillar_publisher_.publish(cmd_vel_);
 
@@ -133,6 +144,32 @@ void SmbHighlevelController::pillarCallback(const sensor_msgs::LaserScan::ConstP
     marker_.color.b = 0.0;
 
     marker_publisher_.publish(marker_);
+}
+
+bool SmbHighlevelController::start_control(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res){
+    start = req.data;
+    res.success = req.data;
+    if (res.success){
+        res.message = "Robot Start";
+    }
+    else{
+        res.message = "Robot Stop";
+    }
+    ROS_INFO_STREAM(res.message);
+    return true;
+}
+
+bool SmbHighlevelController::obs_control(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res){
+    obs_signal = req.data;
+    res.success = req.data;
+    // if (res.success){
+    //     res.message = "Start the Robot";
+    // }
+    // else{
+    //     res.message = "Stop the Robot";
+    // }
+    // ROS_INFO_STREAM(res.message);
+    return true;
 }
 
 SmbHighlevelController::~SmbHighlevelController()
