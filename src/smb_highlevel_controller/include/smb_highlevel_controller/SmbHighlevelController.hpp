@@ -8,6 +8,7 @@
 #include <geometry_msgs/PointStamped.h>
 #include <geometry_msgs/Twist.h>
 #include <visualization_msgs/Marker.h>
+#include <std_srvs/SetBool.h>
 
 namespace smb_highlevel_controller {
 
@@ -35,7 +36,7 @@ private:
 	/* 用“指针的引用”或“引用”可以只传地址，不能用“::Ptr” 因为可能会不小心对传感器数据进行修改*/
     float pillarOrientation(const sensor_msgs::LaserScan::ConstPtr &msg);
 	float pillarDistance(const sensor_msgs::LaserScan::ConstPtr &msg);
-
+	bool start_control(std_srvs::SetBool::Request& req, std_srvs::SetBool::Response& res);
     ros::NodeHandle nodeHandle_;
     // ros::Subscriber scan_subscriber_;
 	// ros::Subscriber point_subscriber_;
@@ -45,7 +46,9 @@ private:
 
     std::string scan_subscriber_topic_;
 	std::string point_subscriber_topic_;
+	std::string service_name_;
 
+	ros::ServiceServer service_;
 	// tf2_ros::Buffer tfBuffer;
     // tf2_ros::TransformListener tfListener;
 
@@ -54,7 +57,8 @@ private:
 	geometry_msgs::Twist cmd_vel_;
 	// geometry_msgs::PointStamped marker_point_;
 	visualization_msgs::Marker marker_;
-
+	
+	bool start = 1;
 };
 
 } /* namespace */
